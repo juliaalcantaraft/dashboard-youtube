@@ -1,0 +1,10 @@
+streamlit
+google-api-python-client
+pandas
+plotly
+textblob
+deep-translator
+wordcloud
+matplotlib
+numpy
+python-dotenv
