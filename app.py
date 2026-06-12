@@ -14,6 +14,9 @@ st.markdown("Analise os comentários de qualquer vídeo público do YouTube em t
 
 with st.sidebar:
     st.header("⚙️ Configurações")
+    import os
+api_key = os.environ.get("YOUTUBE_API_KEY", "")
+if not api_key:
     api_key = st.text_input("🔑 Sua API Key do YouTube", type="password")
     video_url = st.text_input("🔗 URL ou ID do vídeo")
     max_comments = st.selectbox("💬 Nº de comentários", [50, 100, 200, 500])
