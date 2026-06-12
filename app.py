@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -11,13 +12,6 @@ st.set_page_config(page_title="Dashboard YouTube", page_icon="🎬", layout="wid
 
 st.title("🎬 Dashboard de Análise de Sentimentos — YouTube")
 st.markdown("Analise os comentários de qualquer vídeo público do YouTube em tempo real.")
-
-with st.sidebar:
-    st.header("⚙️ Configurações")
-    api_key = st.text_input("🔑 Sua API Key do YouTube", type="password")
-    video_url = st.text_input("🔗 URL ou ID do vídeo", value="https://www.youtube.com/watch?v=pRpeEdMmmQ0")
-    max_comments = st.selectbox("💬 Nº de comentários", [50, 100, 200, 500])
-    rodar = st.button("▶️ Analisar vídeo")
 
 def extrair_id(url):
     if "v=" in url:
@@ -64,6 +58,13 @@ def classificar(score):
     if score > 0.1: return "Positivo"
     elif score < -0.1: return "Negativo"
     else: return "Neutro"
+
+with st.sidebar:
+    st.header("⚙️ Configurações")
+    api_key = os.environ.get("YOUTUBE_API_KEY", "AIzaSyD43hBcmGvs1kvU5aY0bi-EuHi3IQkHdLk")
+    video_url = st.text_input("🔗 URL ou ID do vídeo", value="https://www.youtube.com/watch?v=pRpeEdMmmQ0")
+    max_comments = st.selectbox("💬 Nº de comentários", [50, 100, 200, 500])
+    rodar = st.button("▶️ Analisar vídeo")
 
 if rodar and api_key and video_url:
     video_id = extrair_id(video_url)
@@ -144,4 +145,4 @@ if rodar and api_key and video_url:
     st.info(f"❤️ Comentário mais curtido: *{mais_curtido[:150]}*")
 
 elif rodar:
-    st.warning("⚠️ Preencha a API Key e a URL do vídeo!")
+    st.warning("⚠️ Preencha a URL do vídeo!")
